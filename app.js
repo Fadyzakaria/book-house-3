@@ -13,7 +13,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Serve static files (CSS, JS, images, etc.)
 app.use(express.static(path.join(__dirname, "public")));
-
+//www
 // Routes
 app.get('/',(req,res,nxt)=>{
   
