@@ -1,0 +1,585 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            color: #2c3e50;
+        }
+
+        .page-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .order-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .back-link {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #ffd700;
+            transform: translateY(-50%) translateX(-5px);
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .order-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .order-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .book-preview {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .book-preview:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-image {
+            width: 120px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .book-info h3 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-info .author {
+            color: #6c757d;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-info .price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            border: none;
+            background: #2c3e50;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            background: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .quantity-input {
+            width: 60px;
+            height: 35px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-input:focus {
+            border-color: #ffd700;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .input-label::after {
+            content: "*";
+            color: #666;
+            margin-left: 4px;
+            font-size: 0.9em;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .input-field:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+            outline: none;
+        }
+
+        .input-field:hover {
+            border-color: #ffd700;
+        }
+
+        .validation-message {
+            display: block;
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            color: #666;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            min-height: 20px;
+        }
+
+        /* Valid state styling */
+        .input-field.valid {
+            border-color: #4CAF50;
+        }
+
+        .input-field.valid:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+
+        /* Invalid state styling */
+        .input-field:invalid:not(:placeholder-shown):not(:focus) {
+            border-color: #e1e1e1;
+        }
+
+        /* Placeholder styling */
+        .input-field::placeholder {
+            color: #999;
+            font-style: italic;
+            letter-spacing: normal;
+        }
+
+        /* Focus animation */
+        @keyframes inputFocus {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .input-field:focus {
+            animation: inputFocus 0.3s ease;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .order-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .summary-title {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: #6c757d;
+            font-size: 1rem;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f8f9fa;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .place-order-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border: none;
+            border-radius: 10px;
+            background: #ffd700;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .place-order-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .shipping-info {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .shipping-info i {
+            color: #2c3e50;
+        }
+
+        @media (max-width: 968px) {
+            .order-container {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+            }
+
+            .back-link {
+                position: static;
+                margin-bottom: 1rem;
+                transform: none;
+            }
+
+            .order-header {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-wrapper {
+                padding: 1rem;
+            }
+
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+
+            .book-preview {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .quantity-control {
+                justify-content: center;
+            }
+        }
+
+        /* Animation Classes */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .form-section {
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .form-section:nth-child(1) { animation-delay: 0.2s; }
+        .form-section:nth-child(2) { animation-delay: 0.4s; }
+        .form-section:nth-child(3) { animation-delay: 0.6s; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ffd700;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e6c200;
+        }
+
+        .quantity-update {
+            animation: pulse 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Add styles for cart count display */
+        .cart-count-display {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: #ffd700;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Update quantity input styles for better visibility */
+        .quantity-input {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 0.5rem;
+            width: 70px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-input:focus {
+            border-color: #ffd700;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+
+        .input-with-validation {
+            position: relative;
+        }
+
+        /* Success animation */
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .input-field.valid {
+            animation: successPulse 0.3s ease;
+        }
+
+        .select-field {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 12px;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 1rem;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .select-field:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+            outline: none;
+        }
+
+        .select-field:hover {
+            border-color: #ffd700;
+        }
+
+        /* Style for options */
+        .select-field option {
+            padding: 12px;
+            font-size: 1rem;
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* Style for disabled divider */
+        .select-field option:disabled {
+            color: #ccc;
+            background-color: #f8f9fa;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* Style for the placeholder option */
+        .select-field option:first-child {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Most popular countries styling */
+        .select-field option:nth-child(2),
+        .select-field option:nth-child(3),
+        .select-field option:nth-child(4),
+        .select-field option:nth-child(5) {
+            font-weight: 500;
+            background-color: #f8f9fa;
+        }
+
+        /* Selected option style */
+        .select-field option:checked {
+            background-color: #ffd700;
+            color: #333;
+        }
+
+        /* Firefox specific styles */
+        @-moz-document url-prefix() {
+            .select-field {
+                text-indent: 0.01px;
+                text-overflow: '';
+                padding-right: 2.5rem;
+            }
+        }
+
+        /* Invalid state */
+        .select-field:invalid {
+            border-color: #e1e1e1;
+        }
+
+        /* Valid state */
+        .select-field:valid {
+            border-color: #4CAF50;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .select-field {
+                font-size: 0.95rem;
+                padding: 10px 2.5rem 10px 12px;
+            }
+        }
+
+        /* Add smooth transition for all interactive elements */
+        .select-field {
+            transition: all 0.3s ease;
+        }
+
+        /* Focus animation */
+        @keyframes selectFocus {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .select-field:focus {
+            animation: selectFocus 0.3s ease;
+        }
+   

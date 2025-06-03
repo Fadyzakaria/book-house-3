@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookHouse - Home</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/index.css">
+
+    <!-- Add Font Awesome for the search icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+</head>
+<body>
+     
+
+
+    <header>
+        <%- include("partials/navbar") %>  
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to BookHouse</h1>
+            <p>Immerse yourself in a world of stories, knowledge, and imagination. Find your perfect literary companion among our carefully curated collection.</p>
+            <a href="#featured-books" class="cta-button">Explore Our Collection</a>
+        </div>
+        <div class="scroll-indicator" onclick="scrollToBooks()">
+            <i class="fas fa-chevron-down fa-2x"></i>
+        </div>
+    </section>
+
+
+    
+    <section class="featured-books" id="featured-books">
+        <h2 class="section-title">Explore Our Collection</h2>
+        <div class="books-grid">
+            <% books.forEach(book => { %>
+                <div class="book-card" data-category="<%= book.category.toLowerCase() %>">
+                    <span class="category-label"><%= book.category %></span>
+                    <img src="<%= book.image %>" alt="<%= book.title %>">
+                    <h3><%= book.title %></h3>
+                    <p>By <%= book.author %></p>
+                    <p class="price"><%= book.price %></p>
+                    <a href="/<%= book.slug %>" class="cta-button">View Details</a>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+    
+
+    
+
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="book-details">
+                <div class="book-image">
+                    <img id="modalBookImage" src="" alt="Book Cover">
+                </div>
+                <div class="book-info">
+                    <h2 id="modalBookTitle"></h2>
+                    <div class="book-meta">
+                        <p id="modalBookAuthor"></p>
+                        <p id="modalBookCategory"></p>
+                        <p id="modalBookPrice"></p>
+                    </div>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn" onclick="updateQuantity(-1)">-</button>
+                        <input type="number" id="quantity" value="1" min="1" max="99">
+                        <button class="quantity-btn" onclick="updateQuantity(1)">+</button>
+                    </div>
+                    <div class="total-price">
+                        Total: <span id="modalTotalPrice"></span>
+                    </div>
+                    <div class="buy-options">
+                        <button class="buy-now-btn" onclick="buyNow()">Buy Now</button>
+                        <button class="add-to-cart-btn" onclick="addToCart()">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll function
+        function scrollToBooks() {
+            document.getElementById('featured-books').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Handle explore link click
+        document.getElementById('exploreLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            scrollToBooks();
+        });
+
+        // Category filtering
+        document.querySelectorAll('.dropdown-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const category = this.getAttribute('href').replace('#', '');
+                filterBooks(category);
+                scrollToBooks();
+            });
+        });
+
+        function filterBooks(category) {
+            const books = document.querySelectorAll('.book-card');
+            books.forEach(book => {
+                if (category === 'all' || book.dataset.category === category) {
+                    book.style.display = 'block';
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const books = document.querySelectorAll('.book-card');
+            
+            books.forEach(book => {
+                const title = book.querySelector('h3').textContent.toLowerCase();
+                const author = book.querySelector('p').textContent.toLowerCase();
+                const category = book.querySelector('.category').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || 
+                    author.includes(searchTerm) || 
+                    category.includes(searchTerm)) {
+                    book.style.display = 'block';
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+        });
+
+        function handleNewsletter(event) {
+            event.preventDefault();
+            const input = event.target.querySelector('input');
+            const button = event.target.querySelector('button');
+            const originalHTML = button.innerHTML;
+            
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            button.disabled = true;
+
+            setTimeout(() => {
+                alert('Thank you for subscribing to our newsletter!');
+                input.value = '';
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+            }, 2000);
+
+            return false;
+        }
+    </script>
+
+<FOOTer>
+    <%- include("partials/footer") %> 
+</FOOTer>
+
+
+</body>
+</html>

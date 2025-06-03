@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Art of Fiction - BookHouse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: white;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, white, white);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: 'Playfair Display', serif;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .product-container {
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-top: 6rem;
+            max-width: 1200px;
+            margin: 7rem auto 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .product-images {
+            position: sticky;
+            top: 100px;
+        }
+
+        .main-image-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 25px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .main-image-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .main-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .main-image:hover {
+            transform: scale(1.05);
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .thumbnail-container {
+            background: white;
+            padding: 0.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .thumbnail-container:hover {
+            transform: translateY(-3px) scale(1.05);
+            border-color: #ffd700;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .product-info {
+            background: white;
+            padding: 3rem;
+            border-radius: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            color: #1a1a2e;
+        }
+
+        .back-to-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #030537;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            color: #ffd700;
+            transform: translateX(-5px);
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #030537;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .author {
+            color: #666;
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .price {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #030537;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .original-price {
+            font-size: 1.4rem;
+            color: #666;
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background: #ffd700;
+            color: #030537;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        .quantity-selector {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-label {
+            display: block;
+            color: #030537;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #030537;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .quantity-btn:hover {
+            background: #ffd700;
+            color: #030537;
+            transform: scale(1.1);
+        }
+
+        .quantity-input {
+            width: 70px;
+            height: 40px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #030537;
+        }
+
+        .quantity-input:focus {
+            border-color: #ffd700;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 1rem;
+        }
+
+        .order-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .buy-now {
+            background: #ffd700;
+            color: #030537;
+        }
+
+        .add-to-cart {
+            background: #030537;
+            color: white;
+            border: 2px solid #ffd700;
+        }
+
+        .order-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .buy-now:hover {
+            background: #ffed4a;
+        }
+
+        .add-to-cart:hover {
+            background: #050857;
+        }
+
+        @media (max-width: 1024px) {
+            .product-container {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                margin-top: 5rem;
+            }
+
+            .product-images {
+                position: static;
+            }
+
+            .main-image {
+                height: 400px;
+            }
+
+            .product-title {
+                font-size: 2.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .product-container {
+                padding: 1rem;
+            }
+
+            .product-info {
+                padding: 2rem;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .price {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 5, 55, 0.9);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .cart-modal-content {
+            position: relative;
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.4s ease;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #030537;
+        }
+
+        .cart-success {
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .cart-success h2 {
+            color: #030537;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .cart-item-details h3 {
+            color: #030537;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-author {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #030537;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-quantity {
+            color: #666;
+        }
+
+        .cart-summary {
+            padding: 1rem 0;
+            border-top: 2px solid #f0f0f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            color: #030537;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .cart-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .cart-actions button {
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .add-to-cart {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-to-cart:active {
+            transform: scale(0.98);
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cart-modal-content {
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes addedToCart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .button-animation {
+            animation: addedToCart 0.3s ease;
+        }
+
+        .cart-action-label {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            display: none;
+            z-index: 2000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-weight: 500;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .cart-action-label i {
+            font-size: 1.2em;
+        }
+
+        .cart-action-label.show {
+            display: flex;
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            0% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .add-to-cart:active {
+            transform: scale(0.95);
+            transition: transform 0.1s;
+        }
+
+        .cart-count-label {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ffd700;
+            color: #030537;
+            padding: 10px 15px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cart-count-label i {
+            font-size: 1.2em;
+        }
+
+        .cart-count-label .count {
+            background: #030537;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 50%;
+            font-size: 0.9em;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .cart-count-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .cart-count-label.has-items {
+            background: #ffd700;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .cart-count-label.bounce {
+            animation: bounce 0.5s cubic-bezier(0.36, 0, 0.66, -0.56);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+
+        .cart-count-label.has-items {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">BookHouse</a>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="product-container">
+        <div class="product-images">
+            <div class="main-image-container">
+                <img src="fady.jpg" alt="The Art of Fiction" class="main-image">
+            </div>
+            <div class="image-gallery">
+                <div class="thumbnail-container">
+                    <img src="images/art-of-fiction-1.jpg" alt="Book view 1" class="thumbnail">
+                </div>
+                <div class="thumbnail-container">
+                    <img src="images/art-of-fiction-2.jpg" alt="Book view 2" class="thumbnail">
+                </div>
+                <div class="thumbnail-container">
+                    <img src="images/art-of-fiction-3.jpg" alt="Book view 3" class="thumbnail">
+                </div>
+                <div class="thumbnail-container">
+                    <img src="images/art-of-fiction-4.jpg" alt="Book view 4" class="thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-info">
+            <a href="/index" class="back-to-home">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+
+            <h1 class="product-title">The Art of Fiction</h1>
+            <p class="author">by Henry James</p>
+            
+            <div class="price">
+                <span>$24.99</span>
+                <span class="original-price">$29.99</span>
+                <span class="discount-badge">17% OFF</span>
+            </div>
+            
+            <p class="description">
+                A masterful exploration of the craft of fiction writing, Henry James's essential guide offers valuable insights for both aspiring and established writers. Drawing from his extensive experience as a novelist, James discusses the art of creating compelling narratives, developing memorable characters, and mastering the nuances of storytelling.
+            </p>
+
+            <div class="quantity-selector">
+                <label class="quantity-label">Quantity</label>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="updateQuantity(-1)">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <input type="number" class="quantity-input" id="quantity" value="1" min="1" max="10">
+                    <button class="quantity-btn" onclick="updateQuantity(1)">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="order-btn buy-now" onclick="location.href='/art-of-fiction-purchase'">
+                    <i class="fas fa-shopping-bag"></i>
+                    Order Now
+                </button>
+                <button class="order-btn add-to-cart" id="addToCartBtn"onclick="location.href='/add-to-cart'">
+                    <i class="fas fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="cart-action-label" id="cartActionLabel">
+                <i class="fas fa-check"></i>
+                Added to Cart!
+            </div>
+        </div>
+    </div>
+
+    <div id="cartModal" class="cart-modal">
+        <div class="cart-modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="cart-success">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2>Added to Cart!</h2>
+                <div class="cart-item">
+                    <img src="images/art-of-fiction.jpg" alt="The Art of Fiction" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <h3>The Art of Fiction</h3>
+                        <p class="cart-author">by Henry James</p>
+                        <p class="cart-price">$24.99</p>
+                        <p class="cart-quantity">Quantity: <span id="modalQuantity">1</span></p>
+                    </div>
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="modalSubtotal">$24.99</span>
+                    </div>
+                </div>
+                <div class="cart-actions">
+                    <button class="continue-shopping" onclick="closeModal()">Continue Shopping</button>
+                    <button class="checkout-btn" onclick="location.href='art-of-fiction-purchase.html'" style="background: #ffd700; color: #030537;">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-count-label" id="cartCountLabel">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="count" id="cartCount">0</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addToCartBtn = document.getElementById('addToCartBtn');
+            const cartCountLabel = document.getElementById('cartCount');
+            const actionLabel = document.getElementById('cartActionLabel');
+            const quantityInput = document.getElementById('quantity');
+            let timeout;
+
+            // Initialize cart count from localStorage
+            let cartCount = parseInt(localStorage.getItem('cartCount')) || 0;
+            updateCartCount(cartCount);
+
+            // Add to Cart button click handler
+            addToCartBtn.addEventListener('click', function() {
+                const quantity = parseInt(quantityInput.value);
+                
+                // Update cart count
+                cartCount += 1;
+                localStorage.setItem('cartCount', cartCount);
+                updateCartCount(cartCount);
+                
+                // Store quantity
+                localStorage.setItem('bookQuantity', quantity);
+                
+                // Show action label
+                showActionLabel(quantity);
+                
+                // Add button animation
+                this.classList.add('button-animation');
+                setTimeout(() => {
+                    this.classList.remove('button-animation');
+                }, 300);
+            });
+
+            function updateCartCount(count) {
+                cartCountLabel.textContent = count;
+                const cartCountLabel = document.querySelector('.cart-count-label');
+                
+                if (count > 0) {
+                    cartCountLabel.classList.add('has-items');
+                    // Add bounce animation
+                    cartCountLabel.classList.add('bounce');
+                    setTimeout(() => {
+                        cartCountLabel.classList.remove('bounce');
+                    }, 500);
+                } else {
+                    cartCountLabel.classList.remove('has-items');
+                }
+            }
+
+            function showActionLabel(quantity) {
+                // Clear any existing timeout
+                if (timeout) {
+                    clearTimeout(timeout);
+                }
+                
+                actionLabel.classList.add('show');
+                
+                // Hide the label after 2 seconds
+                timeout = setTimeout(() => {
+                    actionLabel.style.animation = 'slideOut 0.3s ease forwards';
+                    setTimeout(() => {
+                        actionLabel.classList.remove('show');
+                        actionLabel.style.animation = '';
+                    }, 300);
+                }, 2000);
+            }
+        });
+
+        // Image gallery functionality
+        document.querySelectorAll('.thumbnail-container').forEach(container => {
+            container.addEventListener('click', function() {
+                const mainImage = document.querySelector('.main-image');
+                const thumbnail = this.querySelector('.thumbnail');
+                const tempSrc = mainImage.src;
+                mainImage.src = thumbnail.src;
+                thumbnail.src = tempSrc;
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - BookHouse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="/css/contact.css">
+</head>
+<body>
+    <header>
+        <%- include("partials/navbar") %>
+    </header>  
+    <section class="contact-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Get in Touch</h1>
+            <p class="hero-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+        </div>
+    </section>
+
+    <div class="contact-container">
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h2 class="info-title">Contact Information</h2>
+                
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt info-icon"></i>
+                    <div class="info-content">
+                        <h3>Our Location</h3>
+                        <p>123 Book Street, Literary District<br>New York, NY 10001</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="fas fa-phone-alt info-icon"></i>
+                    <div class="info-content">
+                        <h3>Phone Number</h3>
+                        <p>+1 (555) 123-4567<br>+1 (555) 987-6543</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="fas fa-envelope info-icon"></i>
+                    <div class="info-content">
+                        <h3>Email Address</h3>
+                        <p>info@bookhouse.com<br>support@bookhouse.com</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="fas fa-clock info-icon"></i>
+                    <div class="info-content">
+                        <h3>Working Hours</h3>
+                        <p>Monday - Friday: 9:00 AM - 8:00 PM<br>Saturday: 10:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2 class="form-title">Send us a Message</h2>
+                <form id="contactForm" onsubmit="return handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input 
+                            type="text" 
+                            id="firstName" 
+                            name="firstName" 
+                            required 
+                            pattern="[A-Za-z]+" 
+                            onkeypress="return validateName(event)"
+                            oninput="this.value = this.value.replace(/[^A-Za-z]/g, '')"
+                            title="Please enter letters only"
+                            placeholder="Enter your first name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            required 
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                            oninput="validateEmail(this)"
+                            placeholder="Enter your email address"
+                        >
+                        <span class="validation-message" id="emailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="subject">Subject</label>
+                        <input type="text" id="subject" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="message">Message</label>
+                        <textarea id="message" class="form-input" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <a href="/" class="home-btn">
+        <i class="fas fa-home"></i>
+    </a>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const button = document.querySelector('.submit-btn');
+            const originalText = button.textContent;
+            button.textContent = 'Sending...';
+            button.disabled = true;
+
+            // Simulate form submission
+            setTimeout(() => {
+                alert('Thank you for your message! We will get back to you soon.');
+                event.target.reset();
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 2000);
+
+            return false;
+        }
+
+        // Name validation
+        function validateName(event) {
+            const charCode = event.which || event.keyCode;
+            
+            if ((charCode >= 65 && charCode <= 90) || // Uppercase letters
+                (charCode >= 97 && charCode <= 122) || // Lowercase letters
+                charCode === 8 || // Backspace
+                charCode === 9) { // Tab
+                return true;
+            }
+            
+            // Show error message
+            const firstName = document.getElementById('firstName');
+            firstName.setCustomValidity('Please enter letters only');
+            setTimeout(() => {
+                firstName.setCustomValidity('');
+            }, 2000);
+            
+            // Prevent the character from being entered
+            event.preventDefault();
+            return false;
+        }
+
+        // Add event listener for paste events
+        document.getElementById('firstName').addEventListener('paste', function(e) {
+            // Prevent the default paste action
+            e.preventDefault();
+            
+            // Get the pasted text
+            const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+            
+            // Filter out non-letters and update the input value
+            const filteredText = pastedText.replace(/[^A-Za-z]/g, '');
+            
+            // Insert the filtered text at the cursor position
+            const start = this.selectionStart;
+            const end = this.selectionEnd;
+            const currentValue = this.value;
+            this.value = currentValue.substring(0, start) + filteredText + currentValue.substring(end);
+            
+            // Move the cursor to the end of the inserted text
+            this.setSelectionRange(start + filteredText.length, start + filteredText.length);
+        });
+    </script>
+</body>
+</html>

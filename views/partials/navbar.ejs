@@ -1,0 +1,40 @@
+
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/about.css">
+<link rel="stylesheet" href="/css/searchbar.css">
+<nav>
+
+    <form class="nav-search-form" action="/search" method="GET">
+        <input type="text" name="query" placeholder="Search books..." />
+        <button id="search-icon" type="submit">
+          <div id="search-icon-circle"></div>
+          <span></span>
+        </button>
+      </form>
+      
+
+
+
+    <ul class='nav-links'>
+        <li><a href='/'>Home</a></li>
+        <li class="nav-item">
+            <a href="#" id="exploreLink">Explore</a>
+            <div class="dropdown-menu">
+                <a href="#fiction">Fiction</a>
+                <a href="#non-fiction">Non-Fiction</a>
+                <a href="#mystery">Mystery</a>
+                <a href="#romance">Romance</a>
+                <a href="#science">Science & Technology</a>
+                <a href="#biography">Biography</a>
+            </div>
+        </li>
+        <li><a href='/categories'>Categories</a></li>
+        <li><a href='/about'>About</a></li>
+        <% if(userName === "") { %>
+            <li><a href='/login'>Login</a></li>
+        <% } else { %>
+            <li><a href='/logout'>Logout</a></li>
+            <li class="user">Welcome <%= userName %></li>
+        <% } %>
+    </ul>
+</nav>

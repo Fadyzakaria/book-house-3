@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BookHouse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="/" class="logo">BookHouse</a>
+        </div>
+    </header>
+
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Welcome Back</h2>
+            <form id="loginForm" onsubmit="return handleLogin(event)">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <div class="remember-forgot">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-password" onclick="openModal(); return false;">Forgot Password?</a>
+                </div>
+                <button type="submit" class="login-button">Log In</button>
+            </form>
+            <div class="register-link">
+                <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+            </div>
+            <div class="social-login">
+                <p>Or continue with</p>
+                <div class="social-icons">
+                    <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="google"><i class="fab fa-google"></i></a>
+                    <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this modal HTML after your login-box div but before the closing body tag -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="forgot-password-form">
+                <h2>Reset Password</h2>
+                <p class="modal-description">Enter your email address and we'll send you instructions to reset your password.</p>
+                <form id="resetPasswordForm" onsubmit="return handleResetPassword(event)">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="resetEmail" placeholder="Enter your email" required>
+                    </div>
+                    <button type="submit" class="reset-button">Send Reset Link</button>
+                </form>
+                <div class="back-to-login">
+                    <a href="#" onclick="closeModal(); return false;">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('forgotPasswordModal');
+        const closeBtn = document.querySelector('.close-modal');
+
+        function openModal() {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Close modal when clicking X
+        closeBtn.onclick = closeModal;
+
+        function handleResetPassword(event) {
+            event.preventDefault();
+            const email = document.getElementById('resetEmail').value;
+            
+            // Show loading spinner
+            const button = event.target.querySelector('button');
+            const originalText = button.textContent;
+            button.innerHTML = '<div class="loading-spinner"></div>';
+            button.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                // Hide loading spinner and show success message
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                // Show success message
+                alert('Password reset instructions have been sent to your email.');
+                
+                // Close modal after success
+                closeModal();
+            }, 2000);
+
+            return false;
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+
+            // Here you would typically send this data to your server
+            console.log('Login attempt:', { email, password, remember });
+            
+            // For demonstration purposes, show an alert
+            alert('Login functionality would be implemented here');
+            
+            return false;
+        }
+    </script>
+</body>
+</html> 
