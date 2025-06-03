@@ -6,6 +6,9 @@ const books = require('./data/books.json');
 
 // harby is my brooo
 // fady is the best
+// add a commet
+//diiiii
+//kikssso
 
 // Set view engine and views directory
 app.set('view engine', 'ejs');
