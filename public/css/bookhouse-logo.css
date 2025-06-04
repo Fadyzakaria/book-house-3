@@ -1,0 +1,13 @@
+.logoo-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logoo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    text-decoration: none;
+}

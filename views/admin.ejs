@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - BookHouse</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <a href="/" class="logo">BookHouse</a>
+      <a href="/logout" class="logout-link">Logout</a>
+    </div>
+  </header>
+  <div class="admin-content">
+    <h1>Welcome, <%= userName %> (Admin)</h1>
+    <div class="admin-section">
+      <h2>Manage Books</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% books.forEach(book => { %>
+            <tr>
+              <td><%= book.title %></td>
+              <td><%= book.author %></td>
+              <td>
+                <button class="action-btn edit-btn">Edit</button>
+                <button class="action-btn delete-btn">Delete</button>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <div class="admin-section">
+      <h2>Add New Book</h2>
+      <form class="add-book-form" action="/admin/add-book" method="post">
+        <input type="text" name="title" placeholder="Book Title" required>
+        <input type="text" name="author" placeholder="Author" required>
+        <input type="number" name="price" placeholder="Price" step="1" required>
+        <select name="category">
+          <option value="fiction">Fiction</option>
+          <option value="non-fiction">Non-Fiction</option>
+        </select>
+        <button type="submit">Add Book</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
