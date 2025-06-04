@@ -3,37 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - BookHouse</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/login.css">
+    <title>BookHouse</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
     <header>
-        <div class="logo-container">
-            <a href="/" class="logo">BookHouse</a>
+        <%- include("partials/navbar") %>
+       
         </div>
     </header>
 
     <div class="login-container">
         <div class="login-box">
             <h2>Welcome Back</h2>
-            <form id="loginForm" onsubmit="return handleLogin(event)">
+            <form action="/login" method="post">
                 <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="email" placeholder="Email" required>
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="username" placeholder="Username" required>
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="password" placeholder="Password" required>
+                    <input type="password" name="password" placeholder="Password" required>
                 </div>
                 <div class="remember-forgot">
-                    <label class="remember-me">
-                        <input type="checkbox" id="remember">
-                        <span>Remember me</span>
-                    </label>
-                    <a href="#" class="forgot-password" onclick="openModal(); return false;">Forgot Password?</a>
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
                 </div>
+                <% if (message) { %>
+                    <p style="color: red; text-align: center;"><%= message %></p>
+                <% } %>
                 <button type="submit" class="login-button">Log In</button>
             </form>
             <div class="register-link">
@@ -50,91 +51,46 @@
         </div>
     </div>
 
-    <!-- Add this modal HTML after your login-box div but before the closing body tag -->
-    <div id="forgotPasswordModal" class="modal">
+    <div class="modal" id="forgotPasswordModal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <div class="forgot-password-form">
                 <h2>Reset Password</h2>
                 <p class="modal-description">Enter your email address and we'll send you instructions to reset your password.</p>
-                <form id="resetPasswordForm" onsubmit="return handleResetPassword(event)">
+                <form>
                     <div class="input-group">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" id="resetEmail" placeholder="Enter your email" required>
+                        <input type="email" placeholder="Email" required>
                     </div>
                     <button type="submit" class="reset-button">Send Reset Link</button>
                 </form>
                 <div class="back-to-login">
-                    <a href="#" onclick="closeModal(); return false;">Back to Login</a>
+                    <a href="#">Back to Login</a>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // JavaScript for modal functionality
         const modal = document.getElementById('forgotPasswordModal');
-        const closeBtn = document.querySelector('.close-modal');
+        const forgotPasswordLink = document.querySelector('.forgot-password');
+        const closeModal = document.querySelector('.close-modal');
 
-        function openModal() {
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
             modal.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-        }
+        });
 
-        function closeModal() {
+        closeModal.addEventListener('click', () => {
             modal.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Restore scrolling
-        }
+        });
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
+        window.addEventListener('click', (e) => {
+            if (e.target == modal) {
+                modal.style.display = 'none';
             }
-        }
-
-        // Close modal when clicking X
-        closeBtn.onclick = closeModal;
-
-        function handleResetPassword(event) {
-            event.preventDefault();
-            const email = document.getElementById('resetEmail').value;
-            
-            // Show loading spinner
-            const button = event.target.querySelector('button');
-            const originalText = button.textContent;
-            button.innerHTML = '<div class="loading-spinner"></div>';
-            button.disabled = true;
-
-            // Simulate API call
-            setTimeout(() => {
-                // Hide loading spinner and show success message
-                button.innerHTML = originalText;
-                button.disabled = false;
-                
-                // Show success message
-                alert('Password reset instructions have been sent to your email.');
-                
-                // Close modal after success
-                closeModal();
-            }, 2000);
-
-            return false;
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const remember = document.getElementById('remember').checked;
-
-            // Here you would typically send this data to your server
-            console.log('Login attempt:', { email, password, remember });
-            
-            // For demonstration purposes, show an alert
-            alert('Login functionality would be implemented here');
-            
-            return false;
-        }
+        });
     </script>
 </body>
-</html> 
+</html>
